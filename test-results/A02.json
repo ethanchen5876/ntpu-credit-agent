@@ -1,0 +1,2035 @@
+{
+  "case": {
+    "id": "A02",
+    "title": "追問改上限",
+    "input": "改成最多 15 學分",
+    "expected": "LIMIT_INCOMPATIBLE，撤下舊預估，保留週五時段",
+    "message": "草案未通過。請依驗證結果調整限制或班別。",
+    "codes": [
+      "LIMIT_INCOMPATIBLE"
+    ],
+    "run_id": "705fb8b4c5d341e0",
+    "elapsed_ms": 2.11,
+    "pass": true
+  },
+  "result": {
+    "run_id": "705fb8b4c5d341e0",
+    "created_at": "2026-11-19T08:16:23.519119+00:00",
+    "agent_version": "0.2.0",
+    "rule_version": "NTPU-CSIE-114-20250410",
+    "term": "115-1",
+    "snapshot": {
+      "term": "115-1",
+      "retrieved_on": "2026-11-19",
+      "scope": "資工系學士班查詢 36 列，另收錄六向度各 2 列",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByAllConditions?qEdu=U&qCollege=&qdept=TU01&qYear=115&qTerm=1&qGrade=&qClass=&cour=&teach=&qMemo=&week=&seq1=A&seq2=M",
+      "section_count": 48,
+      "input": "內建校方快照"
+    },
+    "input_sha256": "4dd2c75899b1813451519879ac7c8d43d5617f5cea18995dcdcf8ff1d61fcbf9",
+    "status": "blocked_schedule",
+    "trace": [
+      {
+        "step": 1,
+        "event": "input",
+        "message": "收到本次問題及資料設定",
+        "sha256": "4dd2c75899b1813451519879ac7c8d43d5617f5cea18995dcdcf8ff1d61fcbf9"
+      },
+      {
+        "step": 2,
+        "event": "decision",
+        "message": "確認適用的課規版本，再決定要用哪些工具"
+      },
+      {
+        "step": 3,
+        "event": "tool_call",
+        "message": "match_rules",
+        "arguments": {
+          "department": "資工系學士班",
+          "admission_year": 114
+        }
+      },
+      {
+        "step": 4,
+        "event": "observation",
+        "message": "match_rules",
+        "status": "ok",
+        "output": {
+          "version": "NTPU-CSIE-114-20250410",
+          "course_count": 107
+        },
+        "elapsed_ms": 0.01
+      },
+      {
+        "step": 5,
+        "event": "decision",
+        "message": "執行排課工作流",
+        "task": "plan",
+        "previous_revision": 1,
+        "revision": 2,
+        "invalidated_previous_schedule": true
+      },
+      {
+        "step": 6,
+        "event": "tool_call",
+        "message": "lookup_rules",
+        "arguments": {
+          "version": "NTPU-CSIE-114-20250410",
+          "default_rule_ids": [
+            "CS-TOTAL",
+            "ENROLL-MIN",
+            "PREREQ-DATA",
+            "PREREQ-AI"
+          ]
+        }
+      },
+      {
+        "step": 7,
+        "event": "observation",
+        "message": "lookup_rules",
+        "status": "ok",
+        "output": {
+          "rule_ids": [
+            "CS-TOTAL",
+            "ENROLL-MIN",
+            "PREREQ-DATA",
+            "PREREQ-AI"
+          ]
+        },
+        "elapsed_ms": 0.1
+      },
+      {
+        "step": 8,
+        "event": "tool_call",
+        "message": "import_transcript",
+        "arguments": {
+          "format": "UTF-8 CSV"
+        }
+      },
+      {
+        "step": 9,
+        "event": "observation",
+        "message": "import_transcript",
+        "status": "ok",
+        "output": {
+          "rows": 21
+        },
+        "elapsed_ms": 0.27
+      },
+      {
+        "step": 10,
+        "event": "tool_call",
+        "message": "audit_credits",
+        "arguments": {
+          "row_count": 21,
+          "version": "NTPU-CSIE-114-20250410"
+        }
+      },
+      {
+        "step": 11,
+        "event": "observation",
+        "message": "audit_credits",
+        "status": "ok",
+        "output": {
+          "counted": "40",
+          "status": "尚缺",
+          "required_missing": 16,
+          "evidence_pending": 5
+        },
+        "elapsed_ms": 0.08
+      },
+      {
+        "step": 12,
+        "event": "tool_call",
+        "message": "import_offerings",
+        "arguments": {
+          "term": "115-1",
+          "input": "內建校方快照"
+        }
+      },
+      {
+        "step": 13,
+        "event": "observation",
+        "message": "import_offerings",
+        "status": "ok",
+        "output": {
+          "sections": 48
+        },
+        "elapsed_ms": 1.14
+      },
+      {
+        "step": 14,
+        "event": "decision",
+        "message": "已取得學分缺額，搜尋同學期班別並套用先修與時段條件"
+      },
+      {
+        "step": 15,
+        "event": "tool_call",
+        "message": "find_offerings",
+        "arguments": {
+          "sections": 48,
+          "minimum": "12",
+          "maximum": "15",
+          "blocked": [
+            "週五 12:00–18:00"
+          ],
+          "prioritize_required": true
+        }
+      },
+      {
+        "step": 16,
+        "event": "observation",
+        "message": "find_offerings",
+        "status": "ok",
+        "output": {
+          "eligible_sections": 23,
+          "excluded_reasons": {
+            "ALREADY_COMPLETED": 10,
+            "REVIEW_OFFERING": 15,
+            "BLOCKED_TIME": 12,
+            "YEAR_RESTRICTION": 5,
+            "PREREQUISITE": 1
+          }
+        },
+        "elapsed_ms": 0.12
+      },
+      {
+        "step": 17,
+        "event": "decision",
+        "message": "根據缺額與可用班別產生一份排序式草案"
+      },
+      {
+        "step": 18,
+        "event": "tool_call",
+        "message": "draft_schedule",
+        "arguments": {
+          "eligible_sections": 23,
+          "minimum": "12",
+          "maximum": "15",
+          "blocked": [
+            "週五 12:00–18:00"
+          ],
+          "prioritize_required": true
+        }
+      },
+      {
+        "step": 19,
+        "event": "observation",
+        "message": "draft_schedule",
+        "status": "ok",
+        "output": {
+          "section_ids": [
+            "U2037",
+            "U2286",
+            "U2287",
+            "U2296",
+            "U2345",
+            "U4010"
+          ],
+          "skipped_conflicts": 2
+        },
+        "elapsed_ms": 0.05
+      },
+      {
+        "step": 20,
+        "event": "decision",
+        "message": "用獨立檢查重新驗證整份課表"
+      },
+      {
+        "step": 21,
+        "event": "tool_call",
+        "message": "validate_schedule",
+        "arguments": {
+          "section_ids": [
+            "U2037",
+            "U2286",
+            "U2287",
+            "U2296",
+            "U2345",
+            "U4010"
+          ],
+          "minimum": "12",
+          "maximum": "15",
+          "blocked": [
+            "週五 12:00–18:00"
+          ],
+          "prioritize_required": true
+        }
+      },
+      {
+        "step": 22,
+        "event": "observation",
+        "message": "validate_schedule",
+        "status": "ok",
+        "output": {
+          "feasible": false,
+          "credits": "15",
+          "issues": [
+            "LIMIT_INCOMPATIBLE"
+          ]
+        },
+        "elapsed_ms": 0.06
+      },
+      {
+        "step": 23,
+        "event": "decision",
+        "message": "有未滿足條件，保留草案與原因並結束本次排課"
+      },
+      {
+        "step": 24,
+        "event": "result",
+        "message": "草案未通過。請依驗證結果調整限制或班別。",
+        "status": "blocked_schedule"
+      }
+    ],
+    "llm_calls": 0,
+    "replans": 0,
+    "task": "plan",
+    "rules": [
+      {
+        "rule_id": "CS-TOTAL",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "畢業總學分",
+        "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+        "locator": "第 5 頁下方",
+        "summary": "114 入學資工系學士班畢業最低 132 學分。"
+      },
+      {
+        "rule_id": "ENROLL-MIN",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "學期修課下限",
+        "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+        "locator": "選課補充／學士班減修說明",
+        "summary": "一般學士班大一至大三的常規下限為 16 學分，大四非延修生下限為 9 學分。特殊減修須經核准。"
+      },
+      {
+        "rule_id": "PREREQ-DATA",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "資料結構先修",
+        "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+        "locator": "第 2 頁資料結構列",
+        "summary": "114 入學規劃表將計算機程式設計列為資料結構的先修科目。"
+      },
+      {
+        "rule_id": "PREREQ-AI",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "人工智慧代理人原理及實務先修",
+        "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+        "locator": "第 5 頁代理人課程列",
+        "summary": "114 入學規劃表列人工智慧導論為先修。115-1 U3063 大綱另列程式設計，本版均檢查。"
+      }
+    ],
+    "audit": {
+      "status": "尚缺",
+      "total": "40",
+      "required_total": "132",
+      "missing_total": "92",
+      "source": {
+        "rule_id": "CS-TOTAL",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "畢業總學分",
+        "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+        "locator": "第 5 頁下方"
+      },
+      "categories": [
+        {
+          "key": "major_required",
+          "label": "系專業必修",
+          "minimum": "64",
+          "cap": null,
+          "counted": "26",
+          "missing": "38",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "key": "major_elective",
+          "label": "系專業選修",
+          "minimum": "24",
+          "cap": null,
+          "counted": "0",
+          "missing": "24",
+          "source": {
+            "rule_id": "CS-ELECTIVE",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業選修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2–5 頁"
+          }
+        },
+        {
+          "key": "chinese",
+          "label": "語文通識・國文",
+          "minimum": "4",
+          "cap": "4",
+          "counted": "4",
+          "missing": "0",
+          "source": {
+            "rule_id": "LANG-ZH",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大一國文",
+            "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+            "locator": "113 學年度起入學欄"
+          }
+        },
+        {
+          "key": "english",
+          "label": "語文通識・英文",
+          "minimum": "4",
+          "cap": "4",
+          "counted": "4",
+          "missing": "0",
+          "source": {
+            "rule_id": "LANG-EN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大學英文",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+            "locator": "向度通識教育課程選課須知／通識教育課程表"
+          }
+        },
+        {
+          "key": "general",
+          "label": "向度通識",
+          "minimum": "16",
+          "cap": "16",
+          "counted": "6",
+          "missing": "10",
+          "source": {
+            "rule_id": "GEN-DIM",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "向度通識",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/11_28_450fc52100.pdf",
+            "locator": "第 9 條"
+          },
+          "dimensions": [
+            1,
+            2,
+            3
+          ],
+          "dimension_minimum": 5,
+          "dimensions_missing": 2
+        },
+        {
+          "key": "external",
+          "label": "核准外系選修",
+          "minimum": "0",
+          "cap": "20",
+          "counted": "0",
+          "missing": "0",
+          "source": {
+            "rule_id": "CS-EXTERNAL",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "外系與共同選修採計上限",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+            "locator": "第 2 條第 2 款"
+          }
+        },
+        {
+          "key": "common_elective",
+          "label": "核准共同選修",
+          "minimum": "0",
+          "cap": "6",
+          "counted": "0",
+          "missing": "0",
+          "source": {
+            "rule_id": "CS-EXTERNAL",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "外系與共同選修採計上限",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+            "locator": "第 2 條第 2 款"
+          }
+        }
+      ],
+      "missing_required": [
+        {
+          "course_id": "TU01U30003",
+          "title": "物理學",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30007",
+          "title": "機率",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30008",
+          "title": "數位系統實驗",
+          "credits": "1",
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30009",
+          "title": "數位電子電路",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30010",
+          "title": "數位電子電路實驗",
+          "credits": "1",
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30010",
+          "title": "資料結構",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30011",
+          "title": "微算機與組合語言",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30012",
+          "title": "微算機實驗",
+          "credits": "1",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30013",
+          "title": "電腦網路",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30014",
+          "title": "電腦網路實驗",
+          "credits": "1",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30015",
+          "title": "計算機結構",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30016",
+          "title": "演算法",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30017",
+          "title": "作業系統",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30018",
+          "title": "資料庫系統",
+          "credits": "3",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30006",
+          "title": "專題製作 I",
+          "credits": "2",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30007",
+          "title": "專題製作 II",
+          "credits": "2",
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "key": "PE",
+          "title": "必修體育",
+          "state": "unknown",
+          "source": {
+            "rule_id": "PE",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "必修體育",
+            "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+            "locator": "113 學年度起入學欄／基礎課程"
+          }
+        },
+        {
+          "key": "CAMPUS-CODING",
+          "title": "校定程式設計門檻",
+          "state": "unknown",
+          "source": {
+            "rule_id": "CAMPUS-CODING",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "校定程式設計門檻",
+            "url": "https://graduate.ntpu.edu.tw/p/405-1011-957%2Cc147.php?Lang=zh-tw",
+            "locator": "門檻說明"
+          }
+        },
+        {
+          "key": "CS-CPE",
+          "title": "系訂程式能力檢定",
+          "state": "unknown",
+          "source": {
+            "rule_id": "CS-CPE",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系訂程式能力檢定",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151534468979.pdf",
+            "locator": "第 3、5、6 條"
+          }
+        },
+        {
+          "key": "FOREIGN",
+          "title": "外語能力指標",
+          "state": "unknown",
+          "source": {
+            "rule_id": "FOREIGN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "外語能力指標",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151532324105.pdf",
+            "locator": "第 2–4 條及第 3 頁認定表"
+          }
+        },
+        {
+          "key": "CROSS-DOMAIN",
+          "title": "跨域學習門檻",
+          "state": "unknown",
+          "source": {
+            "rule_id": "CROSS-DOMAIN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "跨域學習門檻",
+            "url": "https://graduate.ntpu.edu.tw/p/405-1011-1073%2Cc147.php?Lang=zh-tw",
+            "locator": "學則第 72 條、門檻說明"
+          }
+        }
+      ],
+      "pending": [
+        {
+          "course_id": "TU01U30046",
+          "reason": "抵免尚無核准代碼",
+          "source": {
+            "rule_id": "TRANSFER",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "學生抵免學分審核",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151537142537.doc",
+            "locator": "第 2–4 條"
+          }
+        }
+      ],
+      "detail": [
+        {
+          "course_id": "EN-BUSINESS",
+          "title": "大學英文：基礎商用英文",
+          "term": "114-1",
+          "status": "passed",
+          "category": "語文通識・英文",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "LANG-EN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大學英文",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+            "locator": "向度通識教育課程選課須知／通識教育課程表"
+          }
+        },
+        {
+          "course_id": "GE-U4016",
+          "title": "當代華文戲劇",
+          "term": "114-1",
+          "status": "passed",
+          "category": "向度通識",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "GEN-DIM",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "向度通識",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/11_28_450fc52100.pdf",
+            "locator": "第 9 條"
+          }
+        },
+        {
+          "course_id": "GE-U4027",
+          "title": "倫理學與當代議題",
+          "term": "114-1",
+          "status": "passed",
+          "category": "向度通識",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "GEN-DIM",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "向度通識",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/11_28_450fc52100.pdf",
+            "locator": "第 9 條"
+          }
+        },
+        {
+          "course_id": "TU01U30001",
+          "title": "計算機程式設計實驗",
+          "term": "114-1",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "1",
+          "counted": "1",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30002",
+          "title": "離散數學",
+          "term": "114-1",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30001",
+          "title": "微積分 I",
+          "term": "114-1",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30003",
+          "title": "計算機概論",
+          "term": "114-1",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30004",
+          "title": "計算機程式設計",
+          "term": "114-1",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "ZH-CLASSICS-1",
+          "title": "大一國文：經典閱讀與詮釋(一)",
+          "term": "114-1",
+          "status": "passed",
+          "category": "語文通識・國文",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "LANG-ZH",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大一國文",
+            "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+            "locator": "113 學年度起入學欄"
+          }
+        },
+        {
+          "course_id": "EN-READING",
+          "title": "大學英文：英文閱讀與討論",
+          "term": "114-2",
+          "status": "passed",
+          "category": "語文通識・英文",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "LANG-EN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大學英文",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+            "locator": "向度通識教育課程選課須知／通識教育課程表"
+          }
+        },
+        {
+          "course_id": "GE-U4063",
+          "title": "職場與法律",
+          "term": "114-2",
+          "status": "passed",
+          "category": "向度通識",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "GEN-DIM",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "向度通識",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/11_28_450fc52100.pdf",
+            "locator": "第 9 條"
+          }
+        },
+        {
+          "course_id": "TU01U30004",
+          "title": "物件導向程式設計",
+          "term": "114-2",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30005",
+          "title": "物件導向程式設計實驗",
+          "term": "114-2",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "1",
+          "counted": "1",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30002",
+          "title": "微積分 II",
+          "term": "114-2",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30004",
+          "title": "計算機程式設計",
+          "term": "114-2",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "0",
+          "reason": "相同永久課號或已核對等價課程，僅採一次",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU99U30005",
+          "title": "數位系統設計",
+          "term": "114-2",
+          "status": "passed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "ZH-CLASSICS-2",
+          "title": "大一國文：經典閱讀與詮釋(二)",
+          "term": "114-2",
+          "status": "passed",
+          "category": "語文通識・國文",
+          "credits": "2",
+          "counted": "2",
+          "reason": "已通過",
+          "source": {
+            "rule_id": "LANG-ZH",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "大一國文",
+            "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+            "locator": "113 學年度起入學欄"
+          }
+        },
+        {
+          "course_id": "TU01U30003",
+          "title": "物理學",
+          "term": "114-2",
+          "status": "failed",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "0",
+          "reason": "未通過",
+          "source": {
+            "rule_id": "CS-REQUIRED",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業必修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1–2、5 頁"
+          }
+        },
+        {
+          "course_id": "TU01U30006",
+          "title": "線性代數",
+          "term": "114-2",
+          "status": "transfer_approved",
+          "category": "系專業必修",
+          "credits": "3",
+          "counted": "3",
+          "reason": "核准等學分抵免",
+          "source": {
+            "rule_id": "TRANSFER",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "學生抵免學分審核",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151537142537.doc",
+            "locator": "第 2–4 條"
+          }
+        },
+        {
+          "course_id": "TU01U30046",
+          "title": "人工智慧導論",
+          "term": "114-2",
+          "status": "transfer_pending",
+          "category": "系專業選修",
+          "credits": "3",
+          "counted": "0",
+          "reason": "抵免尚無核准代碼",
+          "source": {
+            "rule_id": "TRANSFER",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "學生抵免學分審核",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151537142537.doc",
+            "locator": "第 2–4 條"
+          }
+        },
+        {
+          "course_id": "TU01U30031",
+          "title": "資料探勘",
+          "term": "115-1",
+          "status": "in_progress",
+          "category": "系專業選修",
+          "credits": "3",
+          "counted": "0",
+          "reason": "修讀中",
+          "source": {
+            "rule_id": "CS-ELECTIVE",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "系專業選修",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2–5 頁"
+          }
+        }
+      ],
+      "core": {
+        "courses": 0,
+        "minimum_courses": 3,
+        "areas": [],
+        "minimum_areas": 2,
+        "source": {
+          "rule_id": "CS-CORE",
+          "version": "NTPU-CSIE-114-20250410",
+          "title": "核心選修領域",
+          "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+          "locator": "第 3 條"
+        }
+      },
+      "combined_cap": {
+        "counted": "0",
+        "limit": "20",
+        "source": {
+          "rule_id": "CS-EXTERNAL",
+          "version": "NTPU-CSIE-114-20250410",
+          "title": "外系與共同選修採計上限",
+          "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+          "locator": "第 2 條第 2 款"
+        }
+      }
+    },
+    "excluded": [
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "計算機程式設計實驗已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1178"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "依語言中心分班、新生英文程度或重補修認定選課。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U1067"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文（全學年制上半部）落在避開時段（週五 15:10–16:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1067"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文（全學年制上半部）落在避開時段（週五 16:10–17:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1067"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "依語言中心分班、新生英文程度或重補修認定選課。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U1078"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：當代議題聽講訓練落在避開時段（週五 15:10–16:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1078"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：當代議題聽講訓練落在避開時段（週五 16:10–17:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1078"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "大學英文：基礎商用英文已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1132"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "依語言中心分班、新生英文程度或重補修認定選課。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U1132"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：基礎商用英文落在避開時段（週五 15:10–16:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1132"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：基礎商用英文落在避開時段（週五 16:10–17:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1132"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "依語言中心分班、新生英文程度或重補修認定選課。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U1140"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：當代議題聽講訓練落在避開時段（週五 15:10–16:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1140"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：當代議題聽講訓練落在避開時段（週五 16:10–17:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1140"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "大學英文：英文閱讀與討論已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1208"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "依語言中心分班、新生英文程度或重補修認定選課。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U1208"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：英文閱讀與討論落在避開時段（週五 15:10–16:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1208"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "大學英文：英文閱讀與討論落在避開時段（週五 16:10–17:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U1208"
+        ]
+      },
+      {
+        "code": "YEAR_RESTRICTION",
+        "message": "專題製作 I的班別有年級限制。",
+        "remedy": "核對官方選課對象，或選其他班別。",
+        "sections": [
+          "U3175"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "須先繳交專題指導同意書，並確認系上限修條件。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3175"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "校方課表已註記停開。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3197"
+        ]
+      },
+      {
+        "code": "YEAR_RESTRICTION",
+        "message": "專題製作 I的班別有年級限制。",
+        "remedy": "核對官方選課對象，或選其他班別。",
+        "sections": [
+          "U3198"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "須先繳交專題指導同意書，並確認系上限修條件。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3198"
+        ]
+      },
+      {
+        "code": "YEAR_RESTRICTION",
+        "message": "專題製作 I的班別有年級限制。",
+        "remedy": "核對官方選課對象，或選其他班別。",
+        "sections": [
+          "U3199"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "須先繳交專題指導同意書，並確認系上限修條件。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3199"
+        ]
+      },
+      {
+        "code": "YEAR_RESTRICTION",
+        "message": "專題製作 I的班別有年級限制。",
+        "remedy": "核對官方選課對象，或選其他班別。",
+        "sections": [
+          "U3200"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "須先繳交專題指導同意書，並確認系上限修條件。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3200"
+        ]
+      },
+      {
+        "code": "YEAR_RESTRICTION",
+        "message": "專題製作 I的班別有年級限制。",
+        "remedy": "核對官方選課對象，或選其他班別。",
+        "sections": [
+          "U3649"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "須先繳交專題指導同意書，並確認系上限修條件。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3649"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "微積分 I已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1152"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "計算機程式設計已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1524"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "離散數學已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1526"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "學期有開課，與 114 課規的採計對照需由系辦確認。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U2285"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "計算機概論已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U1525"
+        ]
+      },
+      {
+        "code": "PREREQUISITE",
+        "message": "人工智慧代理人原理及實務缺少先修「人工智慧導論」。",
+        "remedy": "先通過先修科目，或選其他課。",
+        "sections": [
+          "U3063"
+        ],
+        "prerequisite": "TU01U30046"
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "學期有開課，與 114 課規的採計對照需由系辦確認。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3134"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "校方課表已註記停開。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U3269"
+        ]
+      },
+      {
+        "code": "REVIEW_OFFERING",
+        "message": "學期有開課，與 114 課規的採計對照需由系辦確認。",
+        "remedy": "先核對官方課程頁及授課單位。",
+        "sections": [
+          "U4064"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "當代華文戲劇已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U4016"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "倫理學與當代議題已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U4027"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "建築環境之美落在避開時段（週五 13:10–14:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U4029"
+        ]
+      },
+      {
+        "code": "BLOCKED_TIME",
+        "message": "建築環境之美落在避開時段（週五 14:10–15:00）。",
+        "remedy": "改選其他班別，或確認是否調整避開時段。",
+        "sections": [
+          "U4029"
+        ]
+      },
+      {
+        "code": "ALREADY_COMPLETED",
+        "message": "職場與法律已取得學分或完成認定。",
+        "remedy": "改選其他尚未完成的科目。",
+        "sections": [
+          "U4063"
+        ]
+      },
+      {
+        "code": "TIME_CONFLICT",
+        "message": "微算機與組合語言與二十世紀德國史衝堂（週四 10:10–11:00／週四 10:10–11:00）。",
+        "remedy": "換班或確認實際週次。",
+        "sections": [
+          "U2345",
+          "U4007"
+        ],
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      {
+        "code": "TIME_CONFLICT",
+        "message": "微算機與組合語言與二十世紀德國史衝堂（週四 11:10–12:00／週四 11:10–12:00）。",
+        "remedy": "換班或確認實際週次。",
+        "sections": [
+          "U2345",
+          "U4007"
+        ],
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      }
+    ],
+    "schedule": {
+      "feasible": false,
+      "credits": "15",
+      "official_minimum": "16",
+      "effective_minimum": "16",
+      "source": {
+        "rule_id": "ENROLL-MIN",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "學期修課下限",
+        "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+        "locator": "選課補充／學士班減修說明"
+      },
+      "classes": [
+        {
+          "section_id": "U2037",
+          "course_id": "TU01U30007",
+          "title": "機率",
+          "credits": "3",
+          "class_name": "資工系・應修年級 2",
+          "meetings": [
+            {
+              "label": "週四 13:10–14:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週四 14:10–15:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週四 15:10–16:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "section_id": "U2286",
+          "course_id": "TU01U30009",
+          "title": "數位電子電路",
+          "credits": "3",
+          "class_name": "資工系・應修年級 2",
+          "meetings": [
+            {
+              "label": "週二 15:10–16:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週二 16:10–17:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週二 17:10–18:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "section_id": "U2287",
+          "course_id": "TU99U30010",
+          "title": "資料結構",
+          "credits": "3",
+          "class_name": "資工系・應修年級 2",
+          "meetings": [
+            {
+              "label": "週三 09:10–10:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週三 10:10–11:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週三 11:10–12:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "section_id": "U2296",
+          "course_id": "TU01U30008",
+          "title": "數位系統實驗",
+          "credits": "1",
+          "class_name": "資工系・應修年級 2",
+          "meetings": [
+            {
+              "label": "週五 09:10–10:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週五 10:10–11:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週五 11:10–12:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "PLAN-P1",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 1 頁"
+          }
+        },
+        {
+          "section_id": "U2345",
+          "course_id": "TU01U30011",
+          "title": "微算機與組合語言",
+          "credits": "3",
+          "class_name": "資工系・應修年級 2",
+          "meetings": [
+            {
+              "label": "週四 09:10–10:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週四 10:10–11:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週四 11:10–12:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "PLAN-P2",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "114 資工系專業科目規劃表",
+            "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+            "locator": "第 2 頁"
+          }
+        },
+        {
+          "section_id": "U4010",
+          "course_id": "GE-U4010",
+          "title": "文化創意產業",
+          "credits": "2",
+          "class_name": "向度四",
+          "meetings": [
+            {
+              "label": "週一 13:10–14:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            },
+            {
+              "label": "週一 14:10–15:00",
+              "weeks": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ],
+          "source": {
+            "rule_id": "GEN-OPEN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "115-1 向度通識樣本",
+            "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByOther?qYear=115&qTerm=1&qDept=GU18&qGroup=&week=&seq1=A&seq2=M",
+            "locator": "115-1 向度通識查詢結果 105-向度欄"
+          }
+        }
+      ],
+      "issues": [
+        {
+          "code": "LIMIT_INCOMPATIBLE",
+          "message": "設定上限 15 低於適用的下限 16。",
+          "remedy": "將上限調整為至少 16 學分。",
+          "sections": [],
+          "source": {
+            "rule_id": "ENROLL-MIN",
+            "version": "NTPU-CSIE-114-20250410",
+            "title": "學期修課下限",
+            "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+            "locator": "選課補充／學士班減修說明"
+          }
+        }
+      ]
+    },
+    "message": "草案未通過。請依驗證結果調整限制或班別。",
+    "revision": 2,
+    "preferences": {
+      "minimum": "12",
+      "maximum": "15",
+      "blocked": [
+        "週五 12:00–18:00"
+      ],
+      "prioritize_required": true
+    },
+    "elapsed_ms": 2.11
+  }
+}

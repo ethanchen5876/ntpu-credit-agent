@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "A07",
+    "title": "修課 CSV 缺學分欄位",
+    "input": "我還缺哪些畢業要求？",
+    "expected": "CSV_FIELDS，提示補齊 credits 欄位",
+    "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+    "codes": [
+      "CSV_FIELDS"
+    ],
+    "run_id": "c7df5a1f04d54fa7",
+    "elapsed_ms": 0.34,
+    "pass": true
+  },
+  "result": {
+    "run_id": "c7df5a1f04d54fa7",
+    "created_at": "2026-11-19T08:16:23.575227+00:00",
+    "agent_version": "0.2.0",
+    "rule_version": "NTPU-CSIE-114-20250410",
+    "term": "115-1",
+    "snapshot": {
+      "term": "115-1",
+      "retrieved_on": "2026-11-19",
+      "scope": "資工系學士班查詢 36 列，另收錄六向度各 2 列",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByAllConditions?qEdu=U&qCollege=&qdept=TU01&qYear=115&qTerm=1&qGrade=&qClass=&cour=&teach=&qMemo=&week=&seq1=A&seq2=M",
+      "section_count": 48,
+      "input": "內建校方快照"
+    },
+    "input_sha256": "e849bfc16bf98b3062cef376f6f9d1d8db9004568940248c7dcf1632e5895524",
+    "status": "needs_action",
+    "trace": [
+      {
+        "step": 1,
+        "event": "input",
+        "message": "收到本次問題及資料設定",
+        "sha256": "e849bfc16bf98b3062cef376f6f9d1d8db9004568940248c7dcf1632e5895524"
+      },
+      {
+        "step": 2,
+        "event": "decision",
+        "message": "確認適用的課規版本，再決定要用哪些工具"
+      },
+      {
+        "step": 3,
+        "event": "tool_call",
+        "message": "match_rules",
+        "arguments": {
+          "department": "資工系學士班",
+          "admission_year": 114
+        }
+      },
+      {
+        "step": 4,
+        "event": "observation",
+        "message": "match_rules",
+        "status": "ok",
+        "output": {
+          "version": "NTPU-CSIE-114-20250410",
+          "course_count": 107
+        },
+        "elapsed_ms": 0.0
+      },
+      {
+        "step": 5,
+        "event": "decision",
+        "message": "執行學分檢核工作流",
+        "task": "audit",
+        "previous_revision": 0,
+        "revision": 0,
+        "invalidated_previous_schedule": false
+      },
+      {
+        "step": 6,
+        "event": "tool_call",
+        "message": "lookup_rules",
+        "arguments": {
+          "version": "NTPU-CSIE-114-20250410",
+          "default_rule_ids": [
+            "CS-TOTAL"
+          ]
+        }
+      },
+      {
+        "step": 7,
+        "event": "observation",
+        "message": "lookup_rules",
+        "status": "ok",
+        "output": {
+          "rule_ids": [
+            "CS-TOTAL"
+          ]
+        },
+        "elapsed_ms": 0.1
+      },
+      {
+        "step": 8,
+        "event": "tool_call",
+        "message": "import_transcript",
+        "arguments": {
+          "format": "UTF-8 CSV"
+        }
+      },
+      {
+        "step": 9,
+        "event": "observation",
+        "message": "import_transcript",
+        "status": "error",
+        "error": {
+          "code": "CSV_FIELDS",
+          "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+          "remedy": "使用 UTF-8 範本，移除姓名、學號等額外欄位。"
+        },
+        "elapsed_ms": 0.04
+      },
+      {
+        "step": 10,
+        "event": "decision",
+        "message": "資料或條件需要補正，停止目前工作流",
+        "code": "CSV_FIELDS"
+      },
+      {
+        "step": 11,
+        "event": "result",
+        "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+        "status": "needs_action"
+      }
+    ],
+    "llm_calls": 0,
+    "replans": 0,
+    "task": "audit",
+    "rules": [
+      {
+        "rule_id": "CS-TOTAL",
+        "version": "NTPU-CSIE-114-20250410",
+        "title": "畢業總學分",
+        "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+        "locator": "第 5 頁下方",
+        "summary": "114 入學資工系學士班畢業最低 132 學分。"
+      }
+    ],
+    "error": {
+      "code": "CSV_FIELDS",
+      "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+      "remedy": "使用 UTF-8 範本，移除姓名、學號等額外欄位。"
+    },
+    "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+    "revision": 0,
+    "preferences": {
+      "minimum": "12",
+      "maximum": "18",
+      "blocked": [],
+      "prioritize_required": true
+    },
+    "elapsed_ms": 0.34
+  }
+}

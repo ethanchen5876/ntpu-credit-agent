@@ -1,0 +1,115 @@
+[
+  {
+    "id": "A01",
+    "title": "官方課表試排與完整追蹤",
+    "input": "我還缺哪些畢業要求？請規劃 115-1 的課表，12 至 18 學分，週五下午不要排課，優先安排缺少的必修。",
+    "expected": "已採計 40、可行課表 18、預估 58",
+    "message": "課表通過已載明條件驗證，共 18 學分。",
+    "codes": [],
+    "run_id": "27e508e388804ee5",
+    "elapsed_ms": 5.03,
+    "pass": true
+  },
+  {
+    "id": "A02",
+    "title": "追問改上限",
+    "input": "改成最多 15 學分",
+    "expected": "LIMIT_INCOMPATIBLE，撤下舊預估，保留週五時段",
+    "message": "草案未通過。請依驗證結果調整限制或班別。",
+    "codes": [
+      "LIMIT_INCOMPATIBLE"
+    ],
+    "run_id": "705fb8b4c5d341e0",
+    "elapsed_ms": 2.11,
+    "pass": true
+  },
+  {
+    "id": "A03",
+    "title": "調整限制後恢復試排",
+    "input": "改成最多 18 學分",
+    "expected": "恢復 18 學分可行課表，條件版本 3",
+    "message": "課表通過已載明條件驗證，共 18 學分。",
+    "codes": [],
+    "run_id": "aac1dcee1f0646f1",
+    "elapsed_ms": 2.09,
+    "pass": true
+  },
+  {
+    "id": "A04",
+    "title": "入學年度不符",
+    "input": "檢查畢業學分",
+    "expected": "RULESET_MISMATCH，停止學分計算",
+    "message": "目前沒有符合這組學籍的課規。",
+    "codes": [
+      "RULESET_MISMATCH"
+    ],
+    "run_id": "509ac1bb86924792",
+    "elapsed_ms": 0.12,
+    "pass": true
+  },
+  {
+    "id": "A05",
+    "title": "代理人課程的先修不足",
+    "input": "驗證 U3063",
+    "expected": "PREREQUISITE，指出人工智慧導論，沒有學分預估",
+    "message": "草案未通過。請依驗證結果調整限制或班別。",
+    "codes": [
+      "CREDIT_MIN",
+      "PREREQUISITE"
+    ],
+    "run_id": "b88f8bd9b52745ff",
+    "elapsed_ms": 2.65,
+    "pass": true
+  },
+  {
+    "id": "A06",
+    "title": "兩個官方班別衝堂",
+    "input": "驗證 U2287、U3270",
+    "expected": "TIME_CONFLICT，草案未通過",
+    "message": "草案未通過。請依驗證結果調整限制或班別。",
+    "codes": [
+      "CREDIT_MIN",
+      "TIME_CONFLICT"
+    ],
+    "run_id": "5b864fe661714c9f",
+    "elapsed_ms": 1.54,
+    "pass": true
+  },
+  {
+    "id": "A07",
+    "title": "修課 CSV 缺學分欄位",
+    "input": "我還缺哪些畢業要求？",
+    "expected": "CSV_FIELDS，提示補齊 credits 欄位",
+    "message": "CSV 欄位有誤。必填欄位為 course_id、credits、status、term。",
+    "codes": [
+      "CSV_FIELDS"
+    ],
+    "run_id": "c7df5a1f04d54fa7",
+    "elapsed_ms": 0.34,
+    "pass": true
+  },
+  {
+    "id": "A08",
+    "title": "規章摘要與引用",
+    "input": "請查 CPE 規章",
+    "expected": "回傳 CS-CPE 及條次引用",
+    "message": "找到 3 則相關規章摘要。",
+    "codes": [],
+    "run_id": "fe49179fc7054af6",
+    "elapsed_ms": 0.4,
+    "pass": true
+  },
+  {
+    "id": "A09",
+    "title": "尚未公布的學期",
+    "input": "請排 115-2 的課表",
+    "expected": "TERM_UNAVAILABLE，提示可用 115-1 快照",
+    "message": "目前收錄的校方開課快照是 115-1。",
+    "codes": [
+      "TERM_UNAVAILABLE"
+    ],
+    "run_id": "3e740aacbaf549a3",
+    "elapsed_ms": 0.25,
+    "pass": true
+  }
+]

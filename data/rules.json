@@ -1,0 +1,1021 @@
+{
+  "university": "國立臺北大學",
+  "department": "資訊工程學系",
+  "admission_year": 114,
+  "version": "NTPU-CSIE-114-20250410",
+  "total": 132,
+  "total_rule_id": "CS-TOTAL",
+  "required_category": "major_required",
+  "categories": {
+    "major_required": {
+      "label": "系專業必修",
+      "rule_id": "CS-REQUIRED",
+      "minimum": 64
+    },
+    "major_elective": {
+      "label": "系專業選修",
+      "rule_id": "CS-ELECTIVE",
+      "minimum": 24
+    },
+    "chinese": {
+      "label": "語文通識・國文",
+      "rule_id": "LANG-ZH",
+      "minimum": 4,
+      "cap": 4
+    },
+    "english": {
+      "label": "語文通識・英文",
+      "rule_id": "LANG-EN",
+      "minimum": 4,
+      "cap": 4,
+      "one_per_term": true
+    },
+    "general": {
+      "label": "向度通識",
+      "rule_id": "GEN-DIM",
+      "minimum": 16,
+      "cap": 16,
+      "distinct_minimum": 5
+    },
+    "external": {
+      "label": "核准外系選修",
+      "rule_id": "CS-EXTERNAL",
+      "cap": 20
+    },
+    "common_elective": {
+      "label": "核准共同選修",
+      "rule_id": "CS-EXTERNAL",
+      "cap": 6
+    },
+    "excluded": {
+      "label": "不計畢業學分",
+      "rule_id": "PE",
+      "counts": false
+    },
+    "review": {
+      "label": "待核對採計類別",
+      "rule_id": "OPEN1151",
+      "counts": false
+    }
+  },
+  "evidence": [
+    "PE",
+    "CAMPUS-CODING",
+    "CS-CPE",
+    "FOREIGN",
+    "CROSS-DOMAIN"
+  ],
+  "combined_cap": {
+    "categories": [
+      "external",
+      "common_elective"
+    ],
+    "cap": 20,
+    "rule_id": "CS-EXTERNAL"
+  },
+  "core": {
+    "courses": 3,
+    "areas": 2,
+    "rule_id": "CS-CORE"
+  },
+  "references": {
+    "CS-TOTAL": {
+      "title": "畢業總學分",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 5 頁下方",
+      "summary": "114 入學資工系學士班畢業最低 132 學分。",
+      "keywords": [
+        "畢業",
+        "總學分",
+        "學分",
+        "132"
+      ]
+    },
+    "CS-REQUIRED": {
+      "title": "系專業必修",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 1–2、5 頁",
+      "summary": "系專業必修共 64 學分，並逐門核對必修永久課號。",
+      "keywords": [
+        "必修",
+        "缺修",
+        "64"
+      ]
+    },
+    "CS-ELECTIVE": {
+      "title": "系專業選修",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 2–5 頁",
+      "summary": "系專業選修至少 24 學分，依 114 專業科目規劃表採計。",
+      "keywords": [
+        "系選",
+        "專業選修",
+        "24"
+      ]
+    },
+    "CS-CORE": {
+      "title": "核心選修領域",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+      "locator": "第 3 條",
+      "summary": "至少通過 3 門核心選修，並涵蓋至少 2 個專業領域。",
+      "keywords": [
+        "核心",
+        "選修",
+        "領域"
+      ]
+    },
+    "CS-EXTERNAL": {
+      "title": "外系與共同選修採計上限",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+      "locator": "第 2 條第 2 款",
+      "summary": "經採計認定的外系與校共同選修合計最多 20 學分，共同選修子上限為 6 學分。",
+      "keywords": [
+        "外系",
+        "共同選修",
+        "上限",
+        "外系選修",
+        "抵充"
+      ]
+    },
+    "LANG-ZH": {
+      "title": "大一國文",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+      "locator": "113 學年度起入學欄",
+      "summary": "大一國文分為兩門半學年課，各 2 學分。",
+      "keywords": [
+        "國文",
+        "語文通識"
+      ]
+    },
+    "LANG-EN": {
+      "title": "大學英文",
+      "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+      "locator": "向度通識教育課程選課須知／通識教育課程表",
+      "summary": "大學英文共 4 學分。主題式路徑須在入學學年上下學期各修不同主題。全學年制及免修認定依語言中心。",
+      "keywords": [
+        "大學英文",
+        "語文通識",
+        "英文",
+        "主題式"
+      ]
+    },
+    "GEN-DIM": {
+      "title": "向度通識",
+      "url": "https://cms-carrier.ntpu.edu.tw/uploads/11_28_450fc52100.pdf",
+      "locator": "第 9 條",
+      "summary": "向度通識至少 16 學分，且任五個不同向度各至少一門。與系必選修重複或雷同者須依規定認定。",
+      "keywords": [
+        "通識",
+        "向度",
+        "16"
+      ]
+    },
+    "PE": {
+      "title": "必修體育",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/eval/CMAP_5SYS.ntpu_course113?syear=114&deptno=LU32",
+      "locator": "113 學年度起入學欄／基礎課程",
+      "summary": "必修體育四門，共零畢業學分，完成狀態依校方紀錄。",
+      "keywords": [
+        "體育",
+        "運動"
+      ]
+    },
+    "CAMPUS-CODING": {
+      "title": "校定程式設計門檻",
+      "url": "https://graduate.ntpu.edu.tw/p/405-1011-957%2Cc147.php?Lang=zh-tw",
+      "locator": "門檻說明",
+      "summary": "學士班應取得核准證照或通過校方認列課程，依選課及學籍系統確認。",
+      "keywords": [
+        "程式設計",
+        "程式門檻",
+        "校定",
+        "證照"
+      ]
+    },
+    "CS-CPE": {
+      "title": "系訂程式能力檢定",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151534468979.pdf",
+      "locator": "第 3、5、6 條",
+      "summary": "依系上 CPE 或核可競賽等標準認定，特殊年級依條文。",
+      "keywords": [
+        "cpe",
+        "程式能力",
+        "程式檢定"
+      ]
+    },
+    "FOREIGN": {
+      "title": "外語能力指標",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151532324105.pdf",
+      "locator": "第 2–4 條及第 3 頁認定表",
+      "summary": "外語能力可循課程或檢定途徑向校方申辦認定。",
+      "keywords": [
+        "外語",
+        "英檢",
+        "toeic",
+        "英語能力"
+      ]
+    },
+    "CROSS-DOMAIN": {
+      "title": "跨域學習門檻",
+      "url": "https://graduate.ntpu.edu.tw/p/405-1011-1073%2Cc147.php?Lang=zh-tw",
+      "locator": "學則第 72 條、門檻說明",
+      "summary": "依學則完成適用的微學程、學分學程、輔系、雙主修或師培資格。",
+      "keywords": [
+        "跨域",
+        "學程",
+        "輔系",
+        "雙主修"
+      ]
+    },
+    "TRANSFER": {
+      "title": "學生抵免學分審核",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151537142537.doc",
+      "locator": "第 2–4 條",
+      "summary": "以校方核准結果及本系認定的對應科目為採計依據。",
+      "keywords": [
+        "抵免",
+        "等價",
+        "重修"
+      ]
+    },
+    "ENROLL-MIN": {
+      "title": "學期修課下限",
+      "url": "https://cms-carrier.ntpu.edu.tw/uploads/114_0ccc5d270b.pdf",
+      "locator": "選課補充／學士班減修說明",
+      "summary": "一般學士班大一至大三的常規下限為 16 學分，大四非延修生下限為 9 學分。特殊減修須經核准。",
+      "keywords": [
+        "學期",
+        "下限",
+        "最少",
+        "上限",
+        "選課"
+      ]
+    },
+    "PREREQ-DATA": {
+      "title": "資料結構先修",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 2 頁資料結構列",
+      "summary": "114 入學規劃表將計算機程式設計列為資料結構的先修科目。",
+      "keywords": [
+        "資料結構",
+        "先修",
+        "擋修"
+      ]
+    },
+    "PREREQ-AI": {
+      "title": "人工智慧代理人原理及實務先修",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 5 頁代理人課程列",
+      "summary": "114 入學規劃表列人工智慧導論為先修。115-1 U3063 大綱另列程式設計，本版均檢查。",
+      "keywords": [
+        "人工智慧代理人",
+        "aiagent",
+        "人工智慧導論",
+        "先修"
+      ]
+    },
+    "CS-GROUP": {
+      "title": "系必修採計來源",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151533597023.doc",
+      "locator": "第 4 條",
+      "summary": "系必修依本系開課或明確核對的重補修班別採計。",
+      "keywords": [
+        "外系必修",
+        "重補修",
+        "必修"
+      ]
+    },
+    "OPEN1151": {
+      "title": "115-1 資工系開課快照",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByAllConditions?qEdu=U&qCollege=&qdept=TU01&qYear=115&qTerm=1&qGrade=&qClass=&cour=&teach=&qMemo=&week=&seq1=A&seq2=M",
+      "locator": "全校課程查詢／115-1 資訊工程學系學士班",
+      "summary": "開課流水號用於辨認學期班別。若 114 課程對照或特殊條件待核，先向學校確認。",
+      "keywords": [
+        "開課",
+        "課表",
+        "流水號"
+      ]
+    },
+    "GEN-OPEN": {
+      "title": "115-1 向度通識樣本",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByOther?qYear=115&qTerm=1&qDept=GU18&qGroup=&week=&seq1=A&seq2=M",
+      "locator": "115-1 向度通識查詢結果 105-向度欄",
+      "summary": "樣本按官網向度標籤建檔，遇到類似系課程仍須依正式認定。",
+      "keywords": [
+        "通識",
+        "開課"
+      ]
+    },
+    "PLAN-P1": {
+      "title": "114 資工系專業科目規劃表",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 1 頁",
+      "summary": "依本頁永久課號、學分及專業分類對照。",
+      "keywords": [
+        "plan-p1"
+      ]
+    },
+    "PLAN-P2": {
+      "title": "114 資工系專業科目規劃表",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 2 頁",
+      "summary": "依本頁永久課號、學分及專業分類對照。",
+      "keywords": [
+        "plan-p2"
+      ]
+    },
+    "PLAN-P3": {
+      "title": "114 資工系專業科目規劃表",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 3 頁",
+      "summary": "依本頁永久課號、學分及專業分類對照。",
+      "keywords": [
+        "plan-p3"
+      ]
+    },
+    "PLAN-P4": {
+      "title": "114 資工系專業科目規劃表",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 4 頁",
+      "summary": "依本頁永久課號、學分及專業分類對照。",
+      "keywords": [
+        "plan-p4"
+      ]
+    },
+    "PLAN-P5": {
+      "title": "114 資工系專業科目規劃表",
+      "url": "https://www.csie.ntpu.edu.tw/uploads/file/dat_202504151527295407.pdf",
+      "locator": "第 5 頁",
+      "summary": "依本頁永久課號、學分及專業分類對照。",
+      "keywords": [
+        "plan-p5"
+      ]
+    }
+  },
+  "catalog": {
+    "TU99U30001": {
+      "title": "微積分 I",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU99U30002": {
+      "title": "微積分 II",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU99U30003": {
+      "title": "計算機概論",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU99U30004": {
+      "title": "計算機程式設計",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30001": {
+      "title": "計算機程式設計實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30002": {
+      "title": "離散數學",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30003": {
+      "title": "物理學",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU99U30005": {
+      "title": "數位系統設計",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30004": {
+      "title": "物件導向程式設計",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30005": {
+      "title": "物件導向程式設計實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30006": {
+      "title": "線性代數",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30007": {
+      "title": "機率",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30008": {
+      "title": "數位系統實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30009": {
+      "title": "數位電子電路",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU01U30010": {
+      "title": "數位電子電路實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P1"
+    },
+    "TU99U30010": {
+      "title": "資料結構",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30011": {
+      "title": "微算機與組合語言",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30012": {
+      "title": "微算機實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30013": {
+      "title": "電腦網路",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30014": {
+      "title": "電腦網路實驗",
+      "credits": 1,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30015": {
+      "title": "計算機結構",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30016": {
+      "title": "演算法",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30017": {
+      "title": "作業系統",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30018": {
+      "title": "資料庫系統",
+      "credits": 3,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU99U30006": {
+      "title": "專題製作 I",
+      "credits": 2,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU99U30007": {
+      "title": "專題製作 II",
+      "credits": 2,
+      "category": "major_required",
+      "source": "PLAN-P2"
+    },
+    "TU01U30019": {
+      "title": "工程數學",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30020": {
+      "title": "程式語言結構",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30021": {
+      "title": "工程統計學",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30022": {
+      "title": "程式問題解析",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30023": {
+      "title": "進階資料結構",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30024": {
+      "title": "數值分析",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30025": {
+      "title": "科技管理",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30026": {
+      "title": "組合數學",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30027": {
+      "title": "多媒體技術與應用",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30028": {
+      "title": "進階軟體技術",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30029": {
+      "title": "資訊安全導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2",
+      "core_area": "理論與資安"
+    },
+    "TU01U30030": {
+      "title": "正規語言",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2"
+    },
+    "TU01U30031": {
+      "title": "資料探勘",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P2",
+      "core_area": "理論與資安"
+    },
+    "TU01U30032": {
+      "title": "編碼技術導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30033": {
+      "title": "編譯器",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30034": {
+      "title": "網路安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30035": {
+      "title": "網路安全與深度學習",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30037": {
+      "title": "軟體開發安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30038": {
+      "title": "系統安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30039": {
+      "title": "物聯網安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30040": {
+      "title": "雲端應用安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30041": {
+      "title": "多媒體安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30042": {
+      "title": "密碼協定設計與分析",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30043": {
+      "title": "安全程式設計",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30044": {
+      "title": "嵌入式系統導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3",
+      "core_area": "系統與人工智慧"
+    },
+    "TU01U30045": {
+      "title": "軟體工程",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3",
+      "core_area": "系統與人工智慧"
+    },
+    "TU01U30046": {
+      "title": "人工智慧導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3",
+      "core_area": "系統與人工智慧"
+    },
+    "TU01U30047": {
+      "title": "機器學習導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3",
+      "core_area": "系統與人工智慧"
+    },
+    "TU01U30048": {
+      "title": "人工神經網路與深度學習",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30049": {
+      "title": "超大型積體電路設計導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30050": {
+      "title": "系統晶片導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "TU01U30051": {
+      "title": "行動裝置應用程式開發",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30052": {
+      "title": "系統韌體開發與實作",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30053": {
+      "title": "訊號與系統",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4",
+      "core_area": "多媒體"
+    },
+    "TU01U30054": {
+      "title": "計算機圖學",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30055": {
+      "title": "影像處理導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4",
+      "core_area": "多媒體"
+    },
+    "TU01U30056": {
+      "title": "資料壓縮",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30057": {
+      "title": "數位音訊處理",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30058": {
+      "title": "數位訊號處理",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30059": {
+      "title": "電腦視覺",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30060": {
+      "title": "圖形識別導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30061": {
+      "title": "視訊處理導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30062": {
+      "title": "多視角幾何與圖學應用",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30063": {
+      "title": "人工智慧網路資料集分析程式設計",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4",
+      "core_area": "網路與雲端計算"
+    },
+    "TU01U30064": {
+      "title": "無線網路導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4",
+      "core_area": "網路與雲端計算"
+    },
+    "TU01U30065": {
+      "title": "通訊導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30066": {
+      "title": "個人通訊系統導論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30067": {
+      "title": "區域網路",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30068": {
+      "title": "雲端計算與大數據程式設計",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P4"
+    },
+    "TU01U30069": {
+      "title": "網路管理實務",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30070": {
+      "title": "網際網路技術",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30071": {
+      "title": "資訊工程專論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30072": {
+      "title": "創新原理與實務",
+      "credits": 2,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30073": {
+      "title": "綠能資通訊技術簡介",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30074": {
+      "title": "工程倫理",
+      "credits": 1,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30075": {
+      "title": "企業實習",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30076": {
+      "title": "生成式人工智慧理論",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU01U30077": {
+      "title": "人工智慧代理人原理及實務",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P5"
+    },
+    "TU99U30009": {
+      "title": "區塊鏈實務與安全",
+      "credits": 3,
+      "category": "major_elective",
+      "source": "PLAN-P3"
+    },
+    "ZH-CLASSICS-1": {
+      "title": "大一國文：經典閱讀與詮釋(一)",
+      "credits": 2,
+      "category": "chinese",
+      "source": "LANG-ZH"
+    },
+    "ZH-CLASSICS-2": {
+      "title": "大一國文：經典閱讀與詮釋(二)",
+      "credits": 2,
+      "category": "chinese",
+      "source": "LANG-ZH"
+    },
+    "EN-CONTEMP": {
+      "title": "大學英文：當代議題聽講訓練",
+      "credits": 2,
+      "category": "english",
+      "source": "LANG-EN"
+    },
+    "EN-BUSINESS": {
+      "title": "大學英文：基礎商用英文",
+      "credits": 2,
+      "category": "english",
+      "source": "LANG-EN"
+    },
+    "EN-READING": {
+      "title": "大學英文：英文閱讀與討論",
+      "credits": 2,
+      "category": "english",
+      "source": "LANG-EN"
+    },
+    "EN-YEAR-1": {
+      "title": "大學英文（全學年制上半部）",
+      "credits": 2,
+      "category": "english",
+      "source": "LANG-EN"
+    },
+    "EN-YEAR-2": {
+      "title": "大學英文（全學年制下半部）",
+      "credits": 2,
+      "category": "english",
+      "source": "LANG-EN"
+    },
+    "REVIEW-U2285": {
+      "title": "工程數學 I",
+      "credits": 3,
+      "category": "review",
+      "source": "OPEN1151"
+    },
+    "REVIEW-U3134": {
+      "title": "AI與法律",
+      "credits": 3,
+      "category": "review",
+      "source": "OPEN1151"
+    },
+    "REVIEW-U4064": {
+      "title": "數位訊號處理（通訊系開課）",
+      "credits": 3,
+      "category": "review",
+      "source": "OPEN1151"
+    },
+    "GE-U4007": {
+      "title": "二十世紀德國史",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 6
+    },
+    "GE-U4010": {
+      "title": "文化創意產業",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 4
+    },
+    "GE-U4016": {
+      "title": "當代華文戲劇",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 1
+    },
+    "GE-U4019": {
+      "title": "看影集學賽局",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 4
+    },
+    "GE-U4027": {
+      "title": "倫理學與當代議題",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 2
+    },
+    "GE-U4028": {
+      "title": "網路生活應用",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 5
+    },
+    "GE-U4029": {
+      "title": "建築環境之美",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 5
+    },
+    "GE-U4031": {
+      "title": "宮廷名物賞析",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 6
+    },
+    "GE-U4036": {
+      "title": "海山地區觀光美語",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 1
+    },
+    "GE-U4057": {
+      "title": "公民暨道德教育",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 2
+    },
+    "GE-U4063": {
+      "title": "職場與法律",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 3
+    },
+    "GE-U4112": {
+      "title": "財政、租稅與公民",
+      "credits": 2,
+      "category": "general",
+      "source": "GEN-OPEN",
+      "dimension": 3
+    }
+  }
+}

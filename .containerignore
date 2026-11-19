@@ -1,0 +1,7 @@
+.git
+**/__pycache__
+test-results
+documents
+README.md
+.env
+exports

@@ -1,0 +1,24 @@
+test_adjacent_odd_even_unknown_weeks (test_agent.AgentTests.test_adjacent_odd_even_unknown_weeks) ... ok
+test_credit_floor_invalidates_previous_projection (test_agent.AgentTests.test_credit_floor_invalidates_previous_projection) ... ok
+test_english_same_term_and_full_year_evidence (test_agent.AgentTests.test_english_same_term_and_full_year_evidence) ... ok
+test_export_and_sqlite_keep_only_summary_in_log (test_agent.AgentTests.test_export_and_sqlite_keep_only_summary_in_log) ... ok
+test_general_education_credits_and_dimensions_are_independent (test_agent.AgentTests.test_general_education_credits_and_dimensions_are_independent) ... ok
+test_invalid_csv_is_actionable (test_agent.AgentTests.test_invalid_csv_is_actionable) ... ok
+test_known_terms_at_two_schedule_endpoints (test_agent.AgentTests.test_known_terms_at_two_schedule_endpoints) ... ok
+test_learning_gate_and_retrieval_source (test_agent.AgentTests.test_learning_gate_and_retrieval_source) ... ok
+test_llm_transient_failure_is_bounded_and_private (test_agent.AgentTests.test_llm_transient_failure_is_bounded_and_private) ... ok
+test_missing_year (test_agent.AgentTests.test_missing_year) ... ok
+test_negative_unknown_and_personal_fields (test_agent.AgentTests.test_negative_unknown_and_personal_fields) ... ok
+test_no_future_offerings (test_agent.AgentTests.test_no_future_offerings) ... ok
+test_plan_full_trace_and_projection (test_agent.AgentTests.test_plan_full_trace_and_projection) ... ok
+test_prerequisite_and_schedule_conflict_in_official_sections (test_agent.AgentTests.test_prerequisite_and_schedule_conflict_in_official_sections) ... ok
+test_profile_year_mismatch_stops_before_audit (test_agent.AgentTests.test_profile_year_mismatch_stops_before_audit) ... ok
+test_real_snapshot_and_credit_total (test_agent.AgentTests.test_real_snapshot_and_credit_total) ... ok
+test_shared_limit_and_common_sublimit (test_agent.AgentTests.test_shared_limit_and_common_sublimit) ... ok
+test_total_met_but_required_course_missing (test_agent.AgentTests.test_total_met_but_required_course_missing) ... ok
+test_transcript_deduplicates_and_gates_transfer (test_agent.AgentTests.test_transcript_deduplicates_and_gates_transfer) ... ok
+test_default_demo_follow_up_and_reset (test_app.InterfaceTests.test_default_demo_follow_up_and_reset) ... 2026-11-19 08:16:20.525 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+----------------------------------------------------------------------
+Ran 20 tests in 0.462s
+OK

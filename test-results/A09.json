@@ -1,0 +1,103 @@
+{
+  "case": {
+    "id": "A09",
+    "title": "尚未公布的學期",
+    "input": "請排 115-2 的課表",
+    "expected": "TERM_UNAVAILABLE，提示可用 115-1 快照",
+    "message": "目前收錄的校方開課快照是 115-1。",
+    "codes": [
+      "TERM_UNAVAILABLE"
+    ],
+    "run_id": "3e740aacbaf549a3",
+    "elapsed_ms": 0.25,
+    "pass": true
+  },
+  "result": {
+    "run_id": "3e740aacbaf549a3",
+    "created_at": "2026-11-19T08:16:23.598380+00:00",
+    "agent_version": "0.2.0",
+    "rule_version": "NTPU-CSIE-114-20250410",
+    "term": "115-1",
+    "snapshot": {
+      "term": "115-1",
+      "retrieved_on": "2026-11-19",
+      "scope": "資工系學士班查詢 36 列，另收錄六向度各 2 列",
+      "url": "https://sea.cc.ntpu.edu.tw/pls/dev_stud/course_query_all.queryByAllConditions?qEdu=U&qCollege=&qdept=TU01&qYear=115&qTerm=1&qGrade=&qClass=&cour=&teach=&qMemo=&week=&seq1=A&seq2=M",
+      "section_count": 48,
+      "input": "內建校方快照"
+    },
+    "input_sha256": "85d686cf5469d77528f724aacfeba75ffc64e277662749cb5b50242b402e8300",
+    "status": "needs_action",
+    "trace": [
+      {
+        "step": 1,
+        "event": "input",
+        "message": "收到本次問題及資料設定",
+        "sha256": "85d686cf5469d77528f724aacfeba75ffc64e277662749cb5b50242b402e8300"
+      },
+      {
+        "step": 2,
+        "event": "decision",
+        "message": "確認適用的課規版本，再決定要用哪些工具"
+      },
+      {
+        "step": 3,
+        "event": "tool_call",
+        "message": "match_rules",
+        "arguments": {
+          "department": "資工系學士班",
+          "admission_year": 114
+        }
+      },
+      {
+        "step": 4,
+        "event": "observation",
+        "message": "match_rules",
+        "status": "ok",
+        "output": {
+          "version": "NTPU-CSIE-114-20250410",
+          "course_count": 107
+        },
+        "elapsed_ms": 0.01
+      },
+      {
+        "step": 5,
+        "event": "decision",
+        "message": "執行排課工作流",
+        "task": "plan",
+        "previous_revision": 0,
+        "revision": 0,
+        "invalidated_previous_schedule": false
+      },
+      {
+        "step": 6,
+        "event": "decision",
+        "message": "資料或條件需要補正，停止目前工作流",
+        "code": "TERM_UNAVAILABLE"
+      },
+      {
+        "step": 7,
+        "event": "result",
+        "message": "目前收錄的校方開課快照是 115-1。",
+        "status": "needs_action"
+      }
+    ],
+    "llm_calls": 0,
+    "replans": 0,
+    "task": "plan",
+    "error": {
+      "code": "TERM_UNAVAILABLE",
+      "message": "目前收錄的校方開課快照是 115-1。",
+      "remedy": "請指定 115-1 試排。其他學期須先建檔。"
+    },
+    "message": "目前收錄的校方開課快照是 115-1。",
+    "revision": 0,
+    "preferences": {
+      "minimum": "12",
+      "maximum": "18",
+      "blocked": [],
+      "prioritize_required": true
+    },
+    "elapsed_ms": 0.25
+  }
+}

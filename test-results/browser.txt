@@ -1,0 +1,5 @@
+Podman HTTP /_stcore/health 200
+Browser demo passed at 40 counted credits, 18 schedule credits, 58 projected credits.
+Browser JSON download parsed and matched the screen output and trace.
+Browser follow-up invalidated the old projection and showed LIMIT_INCOMPATIBLE.
+Browser session reset removed previous output.
