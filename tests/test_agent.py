@@ -113,6 +113,25 @@ class AgentTests(unittest.TestCase):
         self.assertTrue(recovery["schedule"]["feasible"])
         self.assertEqual(len(session.recent), 3)
 
+    def test_exact_credit_request_and_follow_up_range(self):
+        session = self.session()
+        first = self.run_agent(session=session)
+        fixed = self.run_agent("幫我規劃20學分的課表", session=session)
+        self.assertEqual(fixed["preferences"]["target_credits"], 20)
+        self.assertEqual(fixed["preferences"]["blocked"], first["preferences"]["blocked"])
+        self.assertTrue(fixed["schedule"]["feasible"])
+        self.assertEqual(fixed["schedule"]["credits"], 20)
+        self.assertEqual(fixed["projection"]["total"], 60)
+        self.assertEqual(fixed["replans"], 0)
+        range_plan = self.run_agent("改成最多 18 學分", session=session)
+        self.assertNotIn("target_credits", range_plan["preferences"])
+        self.assertTrue(range_plan["schedule"]["feasible"])
+        self.assertEqual(range_plan["schedule"]["credits"], 18)
+        for question in ("幫我規劃120學分的課表", "幫我規劃-1學分的課表"):
+            result = self.run_agent(question, session=session)
+            self.assertEqual(result["error"]["code"], "CREDIT_RANGE")
+            self.assertNotIn("schedule", result)
+
     def test_prerequisite_and_schedule_conflict_in_official_sections(self):
         cases = [("驗證 U3063", "PREREQUISITE"), ("驗證 U2287、U3270", "TIME_CONFLICT"),
                  ("驗證 U3269", "REVIEW_OFFERING"), ("驗證 U9999", "UNKNOWN_SECTION")]

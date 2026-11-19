@@ -6,13 +6,24 @@ import time
 from pathlib import Path
 
 import streamlit as st
+from pydantic import ValidationError
 
 from credit_agent.agent import Agent, Session
-from credit_agent.data import DATA_DIR, dump_json, Profile
+from credit_agent.data import DATA_DIR, MAX_TRANSCRIPT_ROWS, Profile, TranscriptRow, dump_json, transcript_csv
 from credit_agent.reports import EVIDENCE_LABELS, export_payloads
 from credit_agent.__main__ import DEMO_QUESTION
 
 st.set_page_config(page_title="選課與畢業學分檢核", page_icon="🎓", layout="wide")
+
+TRANSCRIPT_STATUS_LABELS = {
+    "passed": "已通過",
+    "failed": "未通過",
+    "withdrawn": "已退選或棄修",
+    "in_progress": "修讀中",
+    "planned": "規劃中",
+    "transfer_approved": "已核准抵免",
+    "transfer_pending": "抵免待確認",
+}
 
 
 @st.cache_resource
@@ -26,6 +37,69 @@ def reset_session() -> None:
     for key in list(st.session_state):
         del st.session_state[key]
     st.session_state["generation"] = generation + 1
+
+
+def manual_transcript(agent: Agent, generation: int) -> bytes | None:
+    records: dict[tuple[str, str], TranscriptRow] = st.session_state.setdefault(f"registered{generation}", {})
+    catalog = agent.rules.catalog
+    course_codes = sorted(catalog, key=lambda code: catalog[code].title)
+    latest_year, latest_term = map(int, agent.snapshot.term.split("-"))
+    terms = [f"{year}-{term}" for year in range(agent.rules.admission_year, latest_year + 1)
+             for term in (1, 2) if (year, term) <= (latest_year, latest_term)]
+    with st.container(border=True):
+        st.subheader("用課名登錄修課紀錄")
+        with st.form(f"manual_entry{generation}", clear_on_submit=True):
+            term_column, status_column = st.columns(2)
+            term = term_column.selectbox("學期", terms, key=f"manual_term{generation}")
+            status = status_column.selectbox("修課結果", tuple(TRANSCRIPT_STATUS_LABELS),
+                                             format_func=TRANSCRIPT_STATUS_LABELS.get,
+                                             key=f"manual_status{generation}")
+            course_ids = st.multiselect(
+                "課程", course_codes,
+                format_func=lambda code: f"{catalog[code].title}（{catalog[code].credits} 學分｜{code}）",
+                placeholder="輸入課名搜尋，可一次選多門", key=f"manual_courses{generation}",
+            )
+            st.caption("同一學期、同一修課結果的課程可以一起加入。")
+            with st.expander("補充分數或認定代碼（選填）"):
+                score = st.number_input("分數", 0.0, 100.0, value=None, step=0.01, key=f"manual_score{generation}")
+                approval_ref = st.text_input("已核准的去識別認定代碼", placeholder="APR-…",
+                                             max_chars=28, key=f"manual_approval{generation}").strip() or None
+            submitted = st.form_submit_button("加入修課紀錄")
+        if submitted:
+            if not course_ids:
+                st.error("請先選擇至少一門課。")
+            elif len(course_ids) > 1 and (score is not None or approval_ref is not None):
+                st.error("有填分數或認定代碼時，請逐門加入。")
+            elif len(records.keys() | {(code, term) for code in course_ids}) > MAX_TRANSCRIPT_ROWS:
+                st.error(f"最多可登錄 {MAX_TRANSCRIPT_ROWS} 筆修課紀錄。")
+            else:
+                try:
+                    new_records = [TranscriptRow(course_id=code, term=term, status=status,
+                                                 credits=catalog[code].credits, score=score,
+                                                 approval_ref=approval_ref) for code in course_ids]
+                except ValidationError:
+                    st.error("請確認分數介於 0 至 100，認定代碼符合 APR-… 格式。")
+                else:
+                    records.update(((record.course_id, record.term), record) for record in new_records)
+                    st.success(f"已儲存 {len(new_records)} 筆修課紀錄。")
+
+        if not records:
+            return transcript_csv() if st.checkbox("我目前沒有修課紀錄", key=f"manual_empty{generation}") else None
+        with st.expander(f"已登錄 {len(records)} 筆修課紀錄"):
+            st.dataframe([{"科目": catalog[row.course_id].title, "學期": row.term,
+                           "學分": str(row.credits), "修課結果": TRANSCRIPT_STATUS_LABELS[row.status],
+                           "分數": str(row.score) if row.score is not None else "—"}
+                          for row in records.values()], hide_index=True, use_container_width=True)
+            removal = st.multiselect("要移除的紀錄", list(records),
+                                     format_func=lambda key: f"{catalog[key[0]].title}｜{key[1]}｜{key[0]}",
+                                     key=f"manual_remove{generation}")
+            if st.button("移除所選紀錄", disabled=not removal):
+                for key in removal:
+                    records.pop(key)
+                st.rerun()
+            payload = transcript_csv(records.values())
+            st.download_button("下載這次的修課 CSV", payload, "transcript.csv", "text/csv")
+        return payload
 
 
 def audit_panel(audit: dict, projection: dict | None) -> None:
@@ -88,8 +162,13 @@ def schedule_panel(result: dict) -> None:
         st.success(f"課表通過已載明條件，共 {schedule['credits']} 學分")
     else:
         st.warning(f"草案未通過，共 {schedule['credits']} 學分")
-    st.caption(f"適用下限 {schedule['effective_minimum']}｜設定上限 {result['preferences']['maximum']}｜"
-               f"條件版本 {result['revision']}｜{'、'.join(result['preferences']['blocked']) or '未設定避開時段'}")
+    preferences = result["preferences"]
+    target = preferences.get("target_credits")
+    credit_condition = (f"目標 {target} 學分｜校方下限 {schedule['official_minimum']}"
+                        if target is not None else
+                        f"適用下限 {schedule['effective_minimum']}｜設定上限 {preferences['maximum']}")
+    st.caption(f"{credit_condition}｜條件版本 {result['revision']}｜"
+               f"{'、'.join(preferences['blocked']) or '未設定避開時段'}")
     if schedule["classes"]:
         rows = []
         for item in schedule["classes"]:
@@ -118,10 +197,10 @@ def result_panels(result: dict, session: Session) -> None:
     else:
         st.subheader(result["message"])
     panels = []
-    if "audit" in result:
-        panels.append(("學分檢核", lambda: audit_panel(result["audit"], result.get("projection"))))
     if "schedule" in result or "courses" in result:
         panels.append(("課表與開課", lambda: schedule_panel(result)))
+    if "audit" in result:
+        panels.append(("學分檢核", lambda: audit_panel(result["audit"], result.get("projection"))))
     if "rules" in result:
         panels.append(("規章來源", lambda: sources_panel(result)))
     panels.append(("執行追蹤", lambda: trace_panel(result, session)))
@@ -165,9 +244,10 @@ def main() -> None:
     now = time.monotonic()
     if now - st.session_state.get("last_active", now) > 1800:
         reset_session()
-        st.info("會話已逾時，請重新匯入資料。")
+        st.info("會話已逾時，請重新登錄或匯入資料。")
     st.session_state["last_active"] = now
     generation = st.session_state.get("generation", 0)
+    transcript = None
     with st.sidebar:
         st.header("學籍與資料")
         department = st.text_input("系所", agent.rules.department, key=f"department{generation}")
@@ -180,20 +260,30 @@ def main() -> None:
                                           ("unknown", "confirmed", "missing"),
                                           format_func=EVIDENCE_LABELS.get, key=f"{key}{generation}")
                         for key in agent.rules.evidence}
-        sample = st.toggle("使用去識別示範紀錄", value=generation == 0, key=f"demo{generation}")
-        csv_upload = st.file_uploader("已修課程 CSV", type="csv", disabled=sample, key=f"transcript{generation}")
-        transcript = (DATA_DIR / "demo_transcript.csv").read_bytes() if sample else (
-            csv_upload.getvalue() if csv_upload is not None else None)
+        source = st.radio("修課資料來源", ("示範紀錄", "用課名登錄", "上傳 CSV"),
+                          index=0 if generation == 0 else 1, key=f"transcript_source{generation}")
+        if source == "上傳 CSV":
+            csv_upload = st.file_uploader("已修課程 CSV", type="csv", key=f"transcript{generation}")
+            transcript = csv_upload.getvalue() if csv_upload is not None else None
         with st.expander("匯入開課資料"):
             open_upload = st.file_uploader(f"{agent.snapshot.term} 開課 CSV", type="csv",
                                            key=f"offerings{generation}")
             st.download_button("下載官方快照 CSV", agent.public_offerings, "offerings.csv", "text/csv")
         offerings = open_upload.getvalue() if open_upload is not None else None
-        st.download_button("下載修課 CSV 範本", b"course_id,term,credits,status,score,approval_ref\n",
+        st.download_button("下載修課 CSV 範本", transcript_csv(),
                            "transcript.csv", "text/csv")
         st.download_button("下載課號與學分對照", (DATA_DIR / "catalog.csv").read_bytes(),
                            "catalog.csv", "text/csv")
         st.button("清除本次會話", on_click=reset_session)
+    st.title("選課與畢業學分檢核")
+    st.caption(f"國立臺北大學資訊工程學系｜114 入學課規｜{agent.snapshot.term} 開課"
+               f"｜快照 {agent.snapshot.retrieved_on} [校方課程查詢]({agent.snapshot.url})")
+    sample = source == "示範紀錄"
+    if sample:
+        transcript = (DATA_DIR / "demo_transcript.csv").read_bytes()
+        st.info("目前使用去識別示範紀錄。可在側欄選擇用課名登錄或上傳 CSV。")
+    elif source == "用課名登錄":
+        transcript = manual_transcript(agent, generation)
     profile = Profile(department=department, admission_year=admission, version=version,
                       year_level=year, evidence=evidence)
     fingerprint = hashlib.sha256(profile.model_dump_json().encode() +
@@ -202,14 +292,9 @@ def main() -> None:
     if st.session_state.get("inputs") != fingerprint:
         st.session_state.update(session=Session(profile), inputs=fingerprint, result=None)
     session = st.session_state["session"]
-    st.title("選課與畢業學分檢核")
-    st.caption(f"國立臺北大學資訊工程學系｜114 入學課規｜{agent.snapshot.term} 開課"
-               f"｜快照 {agent.snapshot.retrieved_on} [校方課程查詢]({agent.snapshot.url})")
-    if sample:
-        st.info("目前使用去識別示範紀錄。可在側欄改為匯入自己的 CSV。")
     with st.form(f"ask{generation}"):
         question = st.text_area("想查詢什麼", value=DEMO_QUESTION if sample and generation == 0 else "",
-                                placeholder="例如「我還缺哪些畢業要求？」或「改成最多 18 學分」",
+                                placeholder="例如「我還缺哪些畢業要求？」或「幫我規劃 20 學分的課表」",
                                 max_chars=600, height=100, key=f"question{generation}")
         submitted = st.form_submit_button("執行", type="primary")
     if submitted:

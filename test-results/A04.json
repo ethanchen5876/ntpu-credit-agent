@@ -8,13 +8,13 @@
     "codes": [
       "RULESET_MISMATCH"
     ],
-    "run_id": "509ac1bb86924792",
-    "elapsed_ms": 0.12,
+    "run_id": "c61755da1c674dfa",
+    "elapsed_ms": 0.14,
     "pass": true
   },
   "result": {
-    "run_id": "509ac1bb86924792",
-    "created_at": "2026-11-19T08:16:23.539379+00:00",
+    "run_id": "c61755da1c674dfa",
+    "created_at": "2026-11-19T13:06:36.434349+00:00",
     "agent_version": "0.2.0",
     "rule_version": "NTPU-CSIE-114-20250410",
     "term": "115-1",
@@ -89,6 +89,6 @@
       "blocked": [],
       "prioritize_required": true
     },
-    "elapsed_ms": 0.12
+    "elapsed_ms": 0.14
   }
 }

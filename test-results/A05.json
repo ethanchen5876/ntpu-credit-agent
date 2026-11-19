@@ -9,13 +9,13 @@
       "CREDIT_MIN",
       "PREREQUISITE"
     ],
-    "run_id": "b88f8bd9b52745ff",
-    "elapsed_ms": 2.65,
+    "run_id": "16cc0d9fd74b454b",
+    "elapsed_ms": 3.99,
     "pass": true
   },
   "result": {
-    "run_id": "b88f8bd9b52745ff",
-    "created_at": "2026-11-19T08:16:23.557187+00:00",
+    "run_id": "16cc0d9fd74b454b",
+    "created_at": "2026-11-19T13:06:36.456313+00:00",
     "agent_version": "0.2.0",
     "rule_version": "NTPU-CSIE-114-20250410",
     "term": "115-1",
@@ -97,7 +97,7 @@
             "PREREQ-AI"
           ]
         },
-        "elapsed_ms": 0.14
+        "elapsed_ms": 0.17
       },
       {
         "step": 8,
@@ -115,7 +115,7 @@
         "output": {
           "rows": 21
         },
-        "elapsed_ms": 0.28
+        "elapsed_ms": 0.33
       },
       {
         "step": 10,
@@ -137,7 +137,7 @@
           "required_missing": 16,
           "evidence_pending": 5
         },
-        "elapsed_ms": 0.1
+        "elapsed_ms": 0.16
       },
       {
         "step": 12,
@@ -156,7 +156,7 @@
         "output": {
           "sections": 48
         },
-        "elapsed_ms": 1.8
+        "elapsed_ms": 2.13
       },
       {
         "step": 14,
@@ -1152,6 +1152,6 @@
       "blocked": [],
       "prioritize_required": true
     },
-    "elapsed_ms": 2.65
+    "elapsed_ms": 3.99
   }
 }

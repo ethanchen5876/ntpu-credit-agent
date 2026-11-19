@@ -50,6 +50,11 @@ def main() -> int:
          "回傳 CS-CPE 及條次引用", lambda r: r["rules"][0]["rule_id"] == "CS-CPE"),
         ("A09", "尚未公布的學期", "請排 115-2 的課表", Session(profile), sample,
          "TERM_UNAVAILABLE，提示可用 115-1 快照", lambda r: r["error"]["code"] == "TERM_UNAVAILABLE"),
+        ("A10", "指定恰好 20 學分", "幫我規劃20學分的課表", follow_up, sample,
+         "可行課表 20、預估 60，沿用週五下午避排",
+         lambda r: r["schedule"]["feasible"] and r["schedule"]["credits"] == 20 and
+         r["projection"]["total"] == 60 and r["preferences"]["target_credits"] == 20 and
+         r["preferences"]["blocked"] == ["週五 12:00–18:00"]),
     ]
     summary = []
     for case_id, title, question, session, transcript, expected, check in cases:

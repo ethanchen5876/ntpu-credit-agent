@@ -20,11 +20,11 @@
 | --- | --- |
 | Working Agent 6% | `app.py`、`python -m credit_agent`、`Containerfile`、A01 |
 | Tool／Workflow／ReAct／Planning 5% | `credit_agent/agent.py`、`tools.py`、A01 的實際 Tool Call 與 Observation |
-| 功能完整性 3% | 版本核對、匯入、學分與認定、排課驗證、會話條件、引用與匯出 |
+| 功能完整性 3% | 課名批次登錄、CSV 匯入、學分與認定、20 學分試排、課表驗證、會話條件、引用與匯出 |
 | Error Handling 2% | A02 低於學期下限、A04 課規不符、A05 缺先修、A06 衝堂、A07 缺欄、A09 學期未建檔 |
 | Testing／Failure Evidence 2% | `tests/`、`scripts/run_cases.py`、`test-results/` |
 | README／執行環境 2% | `README.md` 的 Podman 建置、執行、設定、測試與排錯 |
 
 工作流的每一道檢查都有固定的工具契約。Agent 依意圖選路，確認規則版本與資料後才檢核，觀察驗證結果決定產出預估或提示修正。決策及工具摘要均由實際執行產生。後續重排可重用同一份驗證輸出。
 
-成功步驟可從 [A01.json](../test-results/A01.json) 的 `trace` 欄位逐步重播，全部案例與預期值見 [summary.json](../test-results/summary.json)。
+成功步驟可從 [A01.json](../test-results/A01.json) 與 [A10.json](../test-results/A10.json) 的 `trace` 欄位逐步查閱。全部案例與預期值見 [summary.json](../test-results/summary.json)。

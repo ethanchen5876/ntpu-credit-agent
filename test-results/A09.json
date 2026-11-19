@@ -8,13 +8,13 @@
     "codes": [
       "TERM_UNAVAILABLE"
     ],
-    "run_id": "3e740aacbaf549a3",
-    "elapsed_ms": 0.25,
+    "run_id": "568ffcc37cc24788",
+    "elapsed_ms": 0.23,
     "pass": true
   },
   "result": {
-    "run_id": "3e740aacbaf549a3",
-    "created_at": "2026-11-19T08:16:23.598380+00:00",
+    "run_id": "568ffcc37cc24788",
+    "created_at": "2026-11-19T13:06:36.494498+00:00",
     "agent_version": "0.2.0",
     "rule_version": "NTPU-CSIE-114-20250410",
     "term": "115-1",
@@ -98,6 +98,6 @@
       "blocked": [],
       "prioritize_required": true
     },
-    "elapsed_ms": 0.25
+    "elapsed_ms": 0.23
   }
 }

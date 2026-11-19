@@ -2,6 +2,5 @@
 Ubuntu WSL2 · linux/amd64
 podman version 4.9.3
 Python 3.12.16
-Image localhost/ntpu-credit-agent:0.2 9a841a4e17fc35ccd340366c181e254fa4802f5c4a63a65bf9afd3a27c39aeae
-Service port 8501/tcp -> 127.0.0.1:8501
-Unit and case runs used podman run --rm --network none.
+Image localhost/ntpu-credit-agent:0.2 91875af9f17e767a5bc1c3d86c0da1124c868ffa23a0f09a8f8896225f525088
+Unit, interface and acceptance cases used podman run --rm --network none.

@@ -7,6 +7,7 @@ import io
 import json
 import os
 import re
+from collections.abc import Iterable
 from decimal import Decimal
 from pathlib import Path
 from typing import Annotated, Literal
@@ -24,6 +25,8 @@ EvidenceStatus = Literal["unknown", "confirmed", "missing"]
 ZERO = Decimal(0)
 WEEKS = frozenset(range(1, 19))
 DAY_NAMES = "一二三四五六日"
+MAX_TRANSCRIPT_ROWS = 300
+TRANSCRIPT_COLUMNS = ("course_id", "term", "credits", "status", "score", "approval_ref")
 
 
 class InputError(Exception):
@@ -294,7 +297,7 @@ def import_transcript(raw: bytes, rules: RuleSet) -> tuple[TranscriptRow, ...]:
     required = {"course_id", "term", "credits", "status"}
     aliases = {alias: key for key, course in rules.catalog.items() for alias in course.aliases}
     records = []
-    for line, row in read_csv(raw, required, {"score", "approval_ref"}, 300):
+    for line, row in read_csv(raw, required, {"score", "approval_ref"}, MAX_TRANSCRIPT_ROWS):
         code = row["course_id"].upper()
         row["course_id"] = aliases.get(code, code)
         row["score"] = row.get("score") or None
@@ -311,6 +314,14 @@ def import_transcript(raw: bytes, rules: RuleSet) -> tuple[TranscriptRow, ...]:
                              "請核對永久課號及學分。非等學分抵免請交由系辦覆核。")
         records.append(record)
     return tuple(records)
+
+
+def transcript_csv(records: Iterable[TranscriptRow] = ()) -> bytes:
+    buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=TRANSCRIPT_COLUMNS)
+    writer.writeheader()
+    writer.writerows(record.model_dump() for record in records)
+    return buffer.getvalue().encode("utf-8-sig")
 
 
 OFFERING_COLUMNS = {"section_id", "course_id", "term", "class_name",

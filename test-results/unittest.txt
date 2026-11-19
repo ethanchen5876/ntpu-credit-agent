@@ -1,6 +1,7 @@
 test_adjacent_odd_even_unknown_weeks (test_agent.AgentTests.test_adjacent_odd_even_unknown_weeks) ... ok
 test_credit_floor_invalidates_previous_projection (test_agent.AgentTests.test_credit_floor_invalidates_previous_projection) ... ok
 test_english_same_term_and_full_year_evidence (test_agent.AgentTests.test_english_same_term_and_full_year_evidence) ... ok
+test_exact_credit_request_and_follow_up_range (test_agent.AgentTests.test_exact_credit_request_and_follow_up_range) ... ok
 test_export_and_sqlite_keep_only_summary_in_log (test_agent.AgentTests.test_export_and_sqlite_keep_only_summary_in_log) ... ok
 test_general_education_credits_and_dimensions_are_independent (test_agent.AgentTests.test_general_education_credits_and_dimensions_are_independent) ... ok
 test_invalid_csv_is_actionable (test_agent.AgentTests.test_invalid_csv_is_actionable) ... ok
@@ -17,8 +18,12 @@ test_real_snapshot_and_credit_total (test_agent.AgentTests.test_real_snapshot_an
 test_shared_limit_and_common_sublimit (test_agent.AgentTests.test_shared_limit_and_common_sublimit) ... ok
 test_total_met_but_required_course_missing (test_agent.AgentTests.test_total_met_but_required_course_missing) ... ok
 test_transcript_deduplicates_and_gates_transfer (test_agent.AgentTests.test_transcript_deduplicates_and_gates_transfer) ... ok
-test_default_demo_follow_up_and_reset (test_app.InterfaceTests.test_default_demo_follow_up_and_reset) ... 2026-11-19 08:16:20.525 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+test_default_demo_follow_up_and_reset (test_app.InterfaceTests.test_default_demo_follow_up_and_reset) ... 2026-11-19 13:06:33.480 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
 ok
+test_manual_course_registration_uses_the_same_credit_check (test_app.InterfaceTests.test_manual_course_registration_uses_the_same_credit_check) ... 2026-11-19 13:06:34.198 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+
 ----------------------------------------------------------------------
-Ran 20 tests in 0.462s
+Ran 22 tests in 0.948s
+
 OK

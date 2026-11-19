@@ -34,7 +34,7 @@ INTENT_TERMS = {
 }
 INTENT_NAMES = {"audit": "學分檢核", "rules": "規章查詢", "courses": "開課查詢",
                 "plan": "排課", "validate": "驗證指定課表"}
-CREDIT_AMOUNT = r"(\d{1,2}(?:\.\d{1,2})?)"
+CREDIT_AMOUNT = r"(-?\d+(?:\.\d{1,2})?)"
 DAY = r"(?:週|周|星期|禮拜)([一二三四五六日天1-7])(上午|早上|下午|晚上|全天)?"
 AVOID = r"(?:不要排課|不要排|不排課|不排|避開|禁排)"
 DAY_WINDOWS = {"上午": (0, 720), "早上": (0, 720), "下午": (720, 1080),
@@ -52,14 +52,28 @@ class Session:
 
 
 def preference_update(text: str, previous: Preferences) -> tuple[Preferences, bool]:
-    bounds = re.search(CREDIT_AMOUNT + r"(?:至|到|~|–|—|-)" + CREDIT_AMOUNT + r"學分", text)
+    bounds = re.search(r"(?<![\d.])" + CREDIT_AMOUNT + r"(?:至|到|~|–|—|-)" + CREDIT_AMOUNT + r"學分", text)
     lower = re.search(r"(?:至少|最少|下限(?:為|改成|改為)?)" + CREDIT_AMOUNT + r"學分", text)
     upper = re.search(r"(?:最多|至多|不超過|上限(?:為|改成|改為)?)" + CREDIT_AMOUNT + r"學分", text)
     minimum = Decimal(lower[1]) if lower else Decimal(bounds[1]) if bounds else previous.minimum
     maximum = Decimal(upper[1]) if upper else Decimal(bounds[2]) if bounds else previous.maximum
-    if not 0 <= minimum <= maximum <= 40:
+    has_range_change = bool(bounds or lower or upper)
+    target = previous.target_credits
+    exact = None
+    if has_range_change:
+        target = None
+    else:
+        exact = (
+            re.search(r"(?:規劃|安排|排出?|想修|要修|改成|改為|調整成|調整為)(?:一份|一個)?"
+                      + CREDIT_AMOUNT + r"學分", text)
+            or re.search(r"(?<![\d.-])" + CREDIT_AMOUNT + r"學分(?:的)?課表", text)
+            or re.fullmatch(CREDIT_AMOUNT + r"學分[。！？!?]?", text)
+        )
+        if exact:
+            target = Decimal(exact[1])
+    if not 0 <= minimum <= maximum <= 40 or (target is not None and not 0 <= target <= 40):
         raise InputError("CREDIT_RANGE", "學分限制需介於 0 至 40，且下限不能大於上限。",
-                         "請重述學分範圍，例如「16 至 18 學分」。")
+                         "請重述學分條件，例如「規劃 20 學分」或「16 至 18 學分」。")
 
     clear = "取消避開時段" in text or "清除避開時段" in text
     matches = re.findall(AVOID + DAY + "|" + DAY + AVOID, text)
@@ -79,8 +93,8 @@ def preference_update(text: str, previous: Preferences) -> tuple[Preferences, bo
         priority = "不優先" not in text
     updated = replace(previous, minimum=minimum, maximum=maximum,
                       blocked=() if clear else tuple(slots) if matches else previous.blocked,
-                      prioritize_required=priority)
-    return updated, bool(bounds or lower or upper or matches or clear or priority_change)
+                      prioritize_required=priority, target_credits=target)
+    return updated, bool(has_range_change or exact or matches or clear or priority_change)
 
 
 def input_hash(question: str, session: Session, transcript: bytes | None, offerings: bytes | None) -> str:
@@ -191,8 +205,8 @@ class Agent:
             return
         if task != "courses":
             if transcript is None:
-                raise InputError("TRANSCRIPT_REQUIRED", "學分檢核和排課需要已修課程 CSV。",
-                                 "匯入去識別範本，或使用隨附測試資料。")
+                raise InputError("TRANSCRIPT_REQUIRED", "學分檢核和排課需要修課紀錄。",
+                                 "用課名登錄、匯入去識別 CSV，或使用示範資料。")
             rows = run.tool("import_transcript", {"format": "UTF-8 CSV"},
                             lambda: import_transcript(transcript, rules), lambda value: {"rows": len(value)})
             audit = run.tool("audit_credits", {"row_count": len(rows), "version": rules.version},

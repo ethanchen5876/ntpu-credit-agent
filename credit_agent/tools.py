@@ -151,11 +151,22 @@ class Preferences:
     maximum: Decimal = Decimal(18)
     blocked: tuple[Slot, ...] = ()
     prioritize_required: bool = True
+    target_credits: Decimal | None = None
+
+    @property
+    def credit_range(self) -> tuple[Decimal, Decimal]:
+        if self.target_credits is not None:
+            return self.target_credits, self.target_credits
+        return self.minimum, self.maximum
 
     def summary(self) -> dict:
-        return {"minimum": self.minimum, "maximum": self.maximum,
-                "blocked": [slot.label() for slot in self.blocked],
-                "prioritize_required": self.prioritize_required}
+        minimum, maximum = self.credit_range
+        result = {"minimum": minimum, "maximum": maximum,
+                  "blocked": [slot.label() for slot in self.blocked],
+                  "prioritize_required": self.prioritize_required}
+        if self.target_credits is not None:
+            result["target_credits"] = self.target_credits
+        return result
 
 
 def finding(code: str, message: str, remedy: str, sections: tuple[str, ...] = (), **detail) -> dict:
@@ -231,6 +242,23 @@ def conflicts(left: Offering, right: Offering, catalog: dict[str, Course]) -> li
     return issues
 
 
+def _remaining_credit_totals(ranked: list[Offering], catalog: dict[str, Course],
+                             limit: Decimal) -> list[set[Decimal]]:
+    """Credit totals available from each suffix, independent of its timetable."""
+    totals = [{ZERO}]
+    counted = set()
+    for item in reversed(ranked):
+        previous = totals[-1]
+        if item.course_id in counted:
+            totals.append(previous)
+            continue
+        credits = catalog[item.course_id].credits
+        with_course = {value + credits for value in previous if value <= limit - credits}
+        totals.append(previous | with_course)
+        counted.add(item.course_id)
+    return totals[::-1]
+
+
 def draft_schedule(available: list[Offering], rules: RuleSet, audit: Audit,
                    preferences: Preferences) -> tuple[list[str], list[dict]]:
     """Greedy baseline. A3 can try another ordering after validation feedback."""
@@ -239,24 +267,32 @@ def draft_schedule(available: list[Offering], rules: RuleSet, audit: Audit,
     catalog = rules.catalog
     selected, skipped, seen = [], [], set()
     total = ZERO
-    ranked = sorted(available, key=lambda item: (
+    credit_candidates = [item for item in available if catalog[item.course_id].credits
+                         and rules.categories[catalog[item.course_id].category].counts]
+    ranked = sorted(credit_candidates, key=lambda item: (
         not (preferences.prioritize_required and item.course_id in missing),
         not bool(category_gaps.get(catalog[item.course_id].category)),
         item.section_id,
     ))
-    for item in ranked:
+    minimum, maximum = preferences.credit_range
+    possible_totals = _remaining_credit_totals(ranked, catalog, maximum) if minimum == maximum else None
+    for index, item in enumerate(ranked):
         course = catalog[item.course_id]
-        if item.course_id in seen or not course.credits or not rules.categories[course.category].counts:
-            continue
-        if total + course.credits > preferences.maximum:
+        proposed = total + course.credits
+        if item.course_id in seen or proposed > maximum:
             continue
         issues = [issue for other in selected for issue in conflicts(other, item, catalog)]
         if issues:
             skipped.extend(issues)
             continue
+        if possible_totals is not None:
+            remaining = possible_totals[index + 1]
+            # Keep room for an exact total if adding this course makes it unreachable by credit count.
+            if maximum - proposed not in remaining and maximum - total in remaining:
+                continue
         selected.append(item)
         seen.add(item.course_id)
-        total += course.credits
+        total = proposed
     return [item.section_id for item in selected], skipped
 
 
@@ -281,17 +317,18 @@ def validate_schedule(ids: list[str], offerings: dict[str, Offering], rules: Rul
 
     credits = sum((rules.catalog[item.course_id].credits for item in selected), ZERO)
     official_minimum = Decimal(9 if profile.year_level == 4 else 16)
-    effective_minimum = max(official_minimum, preferences.minimum)
+    minimum, maximum = preferences.credit_range
+    effective_minimum = max(official_minimum, minimum)
     reference = rules.source("ENROLL-MIN")
-    if effective_minimum > preferences.maximum:
+    if effective_minimum > maximum:
         issues.append(finding("LIMIT_INCOMPATIBLE",
-                              f"設定上限 {preferences.maximum} 低於適用的下限 {effective_minimum}。",
+                              f"設定上限 {maximum} 低於適用的下限 {effective_minimum}。",
                               f"將上限調整為至少 {effective_minimum} 學分。", source=reference))
     elif credits < effective_minimum:
         issues.append(finding("CREDIT_MIN", f"草案 {credits} 學分，低於適用下限 {effective_minimum}。",
                               "加入能通過驗證的課，或調整偏好後重算。", source=reference))
-    if credits > preferences.maximum:
-        issues.append(finding("CREDIT_MAX", f"草案 {credits} 學分，超過設定上限 {preferences.maximum}。",
+    if credits > maximum:
+        issues.append(finding("CREDIT_MAX", f"草案 {credits} 學分，超過設定上限 {maximum}。",
                               "移除部分課程或確認新的學分上限。"))
     classes = []
     for item in selected:

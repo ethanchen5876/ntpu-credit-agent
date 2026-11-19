@@ -8,13 +8,13 @@
     "codes": [
       "LIMIT_INCOMPATIBLE"
     ],
-    "run_id": "705fb8b4c5d341e0",
+    "run_id": "eb844001af974fa7",
     "elapsed_ms": 2.11,
     "pass": true
   },
   "result": {
-    "run_id": "705fb8b4c5d341e0",
-    "created_at": "2026-11-19T08:16:23.519119+00:00",
+    "run_id": "eb844001af974fa7",
+    "created_at": "2026-11-19T13:06:36.412068+00:00",
     "agent_version": "0.2.0",
     "rule_version": "NTPU-CSIE-114-20250410",
     "term": "115-1",
@@ -96,7 +96,7 @@
             "PREREQ-AI"
           ]
         },
-        "elapsed_ms": 0.1
+        "elapsed_ms": 0.11
       },
       {
         "step": 8,
@@ -114,7 +114,7 @@
         "output": {
           "rows": 21
         },
-        "elapsed_ms": 0.27
+        "elapsed_ms": 0.23
       },
       {
         "step": 10,
@@ -136,7 +136,7 @@
           "required_missing": 16,
           "evidence_pending": 5
         },
-        "elapsed_ms": 0.08
+        "elapsed_ms": 0.11
       },
       {
         "step": 12,
@@ -155,7 +155,7 @@
         "output": {
           "sections": 48
         },
-        "elapsed_ms": 1.14
+        "elapsed_ms": 1.04
       },
       {
         "step": 14,
@@ -191,7 +191,7 @@
             "PREREQUISITE": 1
           }
         },
-        "elapsed_ms": 0.12
+        "elapsed_ms": 0.14
       },
       {
         "step": 17,
@@ -228,7 +228,7 @@
           ],
           "skipped_conflicts": 2
         },
-        "elapsed_ms": 0.05
+        "elapsed_ms": 0.06
       },
       {
         "step": 20,
@@ -268,7 +268,7 @@
             "LIMIT_INCOMPATIBLE"
           ]
         },
-        "elapsed_ms": 0.06
+        "elapsed_ms": 0.07
       },
       {
         "step": 23,

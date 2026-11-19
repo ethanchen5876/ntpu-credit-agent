@@ -6,8 +6,8 @@
     "expected": "已採計 40、可行課表 18、預估 58",
     "message": "課表通過已載明條件驗證，共 18 學分。",
     "codes": [],
-    "run_id": "27e508e388804ee5",
-    "elapsed_ms": 5.03,
+    "run_id": "492bdb05d29b431d",
+    "elapsed_ms": 5.28,
     "pass": true
   },
   {
@@ -19,7 +19,7 @@
     "codes": [
       "LIMIT_INCOMPATIBLE"
     ],
-    "run_id": "705fb8b4c5d341e0",
+    "run_id": "eb844001af974fa7",
     "elapsed_ms": 2.11,
     "pass": true
   },
@@ -30,8 +30,8 @@
     "expected": "恢復 18 學分可行課表，條件版本 3",
     "message": "課表通過已載明條件驗證，共 18 學分。",
     "codes": [],
-    "run_id": "aac1dcee1f0646f1",
-    "elapsed_ms": 2.09,
+    "run_id": "0d1b823390bc4410",
+    "elapsed_ms": 1.97,
     "pass": true
   },
   {
@@ -43,8 +43,8 @@
     "codes": [
       "RULESET_MISMATCH"
     ],
-    "run_id": "509ac1bb86924792",
-    "elapsed_ms": 0.12,
+    "run_id": "c61755da1c674dfa",
+    "elapsed_ms": 0.14,
     "pass": true
   },
   {
@@ -57,8 +57,8 @@
       "CREDIT_MIN",
       "PREREQUISITE"
     ],
-    "run_id": "b88f8bd9b52745ff",
-    "elapsed_ms": 2.65,
+    "run_id": "16cc0d9fd74b454b",
+    "elapsed_ms": 3.99,
     "pass": true
   },
   {
@@ -71,8 +71,8 @@
       "CREDIT_MIN",
       "TIME_CONFLICT"
     ],
-    "run_id": "5b864fe661714c9f",
-    "elapsed_ms": 1.54,
+    "run_id": "9e37a52e3fff41e1",
+    "elapsed_ms": 1.74,
     "pass": true
   },
   {
@@ -84,8 +84,8 @@
     "codes": [
       "CSV_FIELDS"
     ],
-    "run_id": "c7df5a1f04d54fa7",
-    "elapsed_ms": 0.34,
+    "run_id": "7304671b236b4846",
+    "elapsed_ms": 0.39,
     "pass": true
   },
   {
@@ -95,8 +95,8 @@
     "expected": "回傳 CS-CPE 及條次引用",
     "message": "找到 3 則相關規章摘要。",
     "codes": [],
-    "run_id": "fe49179fc7054af6",
-    "elapsed_ms": 0.4,
+    "run_id": "6895c50a2ee343b0",
+    "elapsed_ms": 0.27,
     "pass": true
   },
   {
@@ -108,8 +108,19 @@
     "codes": [
       "TERM_UNAVAILABLE"
     ],
-    "run_id": "3e740aacbaf549a3",
-    "elapsed_ms": 0.25,
+    "run_id": "568ffcc37cc24788",
+    "elapsed_ms": 0.23,
+    "pass": true
+  },
+  {
+    "id": "A10",
+    "title": "指定恰好 20 學分",
+    "input": "幫我規劃20學分的課表",
+    "expected": "可行課表 20、預估 60，沿用週五下午避排",
+    "message": "課表通過已載明條件驗證，共 20 學分。",
+    "codes": [],
+    "run_id": "6a8832a44c484d63",
+    "elapsed_ms": 2.38,
     "pass": true
   }
 ]
