@@ -100,5 +100,3 @@ CLI 支援同次重複 `--question` 保留條件、`--transcript`、`--offerings
 | `UNKNOWN_COURSE` | 用永久課號或目錄內對照代碼。外系及未收錄課程先確認採計依據 |
 | 課表未通過 | 查看原因。可調整班別、補齊先修認定或重設限制後再驗證 |
 | 需要其他學期 | 等校方公開該學期資料後，更新快照、來源與測試基準 |
-
-指定作業二書面報告與程式、資料及測試紀錄一併收錄於 GitHub 儲存庫。[書面報告 PDF](https://github.com/ethanchen5876/ntpu-credit-agent/blob/main/documents/assignment-2-report.pdf)
